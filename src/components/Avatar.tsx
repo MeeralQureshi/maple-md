@@ -1,51 +1,67 @@
 import React, { useState, useEffect } from 'react';
 
-const Avatar: React.FC = () => {
-  const [isWalking, setIsWalking] = useState(false);
+const SPRITE_WIDTH = 512;
+const SPRITE_HEIGHT = 512;
+const SPRITE_SHEET = '/assets/avatar.png';
+
+const spriteSheetMeta = {
+  frameWidth: SPRITE_WIDTH,
+  frameHeight: SPRITE_HEIGHT,
+  frames: [
+    { name: "idle", x: 0, y: 0 },
+    { name: "walkRight", x: 512, y: 0 },
+    { name: "walkLeft", x: 0, y: 512 },
+    { name: "celebrate", x: 512, y: 512 },
+  ],
+};
+
+type AvatarState = 'idle' | 'walkRight' | 'walkLeft' | 'celebrate';
+
+const Avatar: React.FC<{ celebrate?: boolean }> = ({ celebrate }) => {
+  const [state, setState] = useState<AvatarState>('idle');
   const [direction, setDirection] = useState<'left' | 'right'>('right');
 
   useEffect(() => {
+    if (celebrate) {
+      setState('celebrate');
+      return;
+    }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
         setDirection('left');
-        setIsWalking(true);
+        setState('walkLeft');
       } else if (e.key === 'ArrowRight') {
         setDirection('right');
-        setIsWalking(true);
+        setState('walkRight');
       }
     };
-
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        setIsWalking(false);
+        setState('idle');
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, []);
+  }, [celebrate]);
+
+  // Find the correct frame
+  const frame = spriteSheetMeta.frames.find(f => f.name === state) || spriteSheetMeta.frames[0];
 
   return (
-    <div 
-      className={`w-16 h-16 transition-transform duration-200 ${
-        direction === 'left' ? 'scale-x-[-1]' : ''
-      }`}
-    >
-      {/* Placeholder pixel art avatar */}
-      <div className="w-full h-full bg-maple-red rounded-lg relative">
-        {/* Head */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-yellow-200 rounded-full" />
-        {/* Body */}
-        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-500 rounded" />
-        {/* Legs */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-700 rounded-b" />
-      </div>
-    </div>
+    <div
+      style={{
+        width: SPRITE_WIDTH,
+        height: SPRITE_HEIGHT,
+        backgroundImage: `url(${SPRITE_SHEET})`,
+        backgroundPosition: `-${frame.x}px -${frame.y}px`,
+        imageRendering: 'pixelated',
+      }}
+      className="avatar-sprite"
+    />
   );
 };
 
