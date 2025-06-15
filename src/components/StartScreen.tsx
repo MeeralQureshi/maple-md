@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PixelArtCloud from "../art/PixelArtCloud";
+import NarrativeBox from "./NarrativeBox";
 
 const babySprite = "/assets/babySprite.png"; 
 const graduateSprite = "/assets/graduateSprite.png"; 
@@ -135,26 +136,7 @@ export default function StartScreen() {
 
       {/* Narrative Text */}
       <div className="flex justify-center mt-4 z-10 relative">
-        <div className="bg-yellow-50 border-4 border-yellow-800 rounded-xl px-6 py-3 max-w-xl shadow-lg font-press-start text-base md:text-lg text-gray-900 min-h-[90px]">
-          {typedNarrative}
-          {blipIndex !== -1 && blipIndex < narrativeFull.length && (
-            <span className="inline-block w-3 h-5 align-bottom animate-blip ml-0.5">
-              <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g filter="url(#filter0_d_1_2)">
-                  <ellipse cx="8" cy="10" rx="3" ry="4" fill="#ffe066"/>
-                  <ellipse cx="8" cy="10" rx="1.5" ry="2" fill="#fffbe6"/>
-                </g>
-                <defs>
-                  <filter id="filter0_d_1_2" x="0" y="0" width="16" height="20" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                    <feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_1_2"/>
-                  </filter>
-                </defs>
-              </svg>
-            </span>
-          )}
-        </div>
+        <NarrativeBox narrative={narrativeFull} />
       </div>
 
       {/* Start Button */}
