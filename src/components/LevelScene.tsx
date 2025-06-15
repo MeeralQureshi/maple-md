@@ -45,13 +45,13 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         style={{ backgroundImage: 'url("/assets/clouds.png")', backgroundRepeat: 'repeat-x' }}
       >
         {/* Ground */}
-        <div className="absolute bottom-0 w-full h-32 bg-green-600" />
+        <div className="absolute bottom-0 w-full h-32 bg-green-600 z-10" />
         
         {/* Hotspots */}
         {hotspots.map((hotspot) => (
           <div
             key={hotspot.id}
-            className="absolute w-8 h-8 cursor-pointer animate-bounce-slow"
+            className="absolute w-8 h-8 cursor-pointer animate-bounce-slow z-50"
             style={{ left: hotspot.x, bottom: hotspot.y }}
             onClick={() => handleHotspotClick(hotspot)}
           >
@@ -60,7 +60,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div className="absolute" style={{ left: 100 + scrollPosition, bottom: '-5rem' }}>
+        <div className="absolute z-30" style={{ left: 100 + scrollPosition, bottom: '-5rem' }}>
           <Avatar />
         </div>
       </div>
