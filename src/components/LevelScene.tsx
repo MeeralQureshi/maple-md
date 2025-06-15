@@ -19,6 +19,11 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
   const { addXP, addCollectible } = useLevel();
 
+  // Avatar movement and animation state
+  const [avatarX, setAvatarX] = useState(0); // Start at far left
+  const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
+  const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
+
   // Example hotspots for the childhood level
   const hotspots: Hotspot[] = [
     { id: 'toy1', x: 200, y: 300, dialog: "Remember your favorite teddy bear?" },
@@ -34,6 +39,34 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     setActiveDialog(hotspot.dialog);
     addXP(10);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      setAvatarX(prev => {
+        if (e.key === 'ArrowLeft') {
+          setAvatarDirection('left');
+          setAvatarState('walkLeft');
+          return Math.max(0, prev - 10);
+        } else if (e.key === 'ArrowRight') {
+          setAvatarDirection('right');
+          setAvatarState('walkRight');
+          return Math.min(2000 - 128, prev + 10); // 128 = avatar width after scaling
+        }
+        return prev;
+      });
+    };
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        setAvatarState('idle');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
 
   return (
     <div 
@@ -60,8 +93,8 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div className="absolute z-30" style={{ left: 100 + scrollPosition, bottom: '-5rem' }}>
-          <Avatar />
+        <div className="absolute z-30" style={{ left: avatarX, bottom: '-17rem' }}>
+          <Avatar state={avatarState} direction={avatarDirection} />
         </div>
       </div>
 

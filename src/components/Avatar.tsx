@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const SPRITE_WIDTH = 512;  // Each frame is 512x512
 const SPRITE_HEIGHT = 512;
@@ -16,40 +16,18 @@ const spriteSheetMeta = {
 };
 
 type AvatarState = 'idle' | 'walkRight' | 'walkLeft' | 'celebrate';
+type AvatarDirection = 'left' | 'right';
 
-const Avatar: React.FC<{ celebrate?: boolean }> = ({ celebrate }) => {
-  const [state, setState] = useState<AvatarState>('idle');
-  const [direction, setDirection] = useState<'left' | 'right'>('right');
+interface AvatarProps {
+  state: AvatarState;
+  direction: AvatarDirection;
+  celebrate?: boolean;
+}
 
-  useEffect(() => {
-    if (celebrate) {
-      setState('celebrate');
-      return;
-    }
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        setDirection('left');
-        setState('walkLeft');
-      } else if (e.key === 'ArrowRight') {
-        setDirection('right');
-        setState('walkRight');
-      }
-    };
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        setState('idle');
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [celebrate]);
-
-  // Find the correct frame
-  const frame = spriteSheetMeta.frames.find(f => f.name === state) || spriteSheetMeta.frames[0];
+const Avatar: React.FC<AvatarProps> = ({ state, direction, celebrate }) => {
+  // Use celebrate state if true
+  const displayState: AvatarState = celebrate ? 'celebrate' : state;
+  const frame = spriteSheetMeta.frames.find(f => f.name === displayState) || spriteSheetMeta.frames[0];
 
   return (
     <div
@@ -61,6 +39,7 @@ const Avatar: React.FC<{ celebrate?: boolean }> = ({ celebrate }) => {
         backgroundRepeat: 'no-repeat',
         imageRendering: 'pixelated',
         transform: 'scale(0.25)', // Scale down to 128x128
+        transformOrigin: 'top left',
       }}
       className="avatar-sprite"
     />
