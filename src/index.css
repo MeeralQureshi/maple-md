@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar for the level scene */
@@ -85,4 +85,13 @@ body {
   );
   animation: shine 2s infinite;
   pointer-events: none;
+}
+
+@keyframes blip {
+  0% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.2; transform: scale(0.7); }
+}
+.animate-blip {
+  animation: blip 0.3s linear infinite;
 } 

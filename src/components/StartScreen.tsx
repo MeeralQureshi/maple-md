@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PixelArtCloud from "../art/PixelArtCloud";
 
@@ -16,12 +16,33 @@ const clouds = [
 export default function StartScreen() {
   const navigate = useNavigate();
 
+  // Typewriter effect for narrative text
+  const narrativeFull = "Join Murtaza on an epic adventure through life's milestones, from his very first steps to earning his medical degree!";
+  const [typedNarrative, setTypedNarrative] = useState("");
+  const [blipIndex, setBlipIndex] = useState(-1);
+
+  useEffect(() => {
+    setTypedNarrative("");
+    setBlipIndex(-1);
+    let i = 0;
+    const interval = setInterval(() => {
+      setTypedNarrative(narrativeFull.slice(0, i + 1));
+      setBlipIndex(i);
+      i++;
+      if (i >= narrativeFull.length) {
+        clearInterval(interval);
+        setTimeout(() => setBlipIndex(-1), 200); // Remove blip after finish
+      }
+    }, 24); // Fast typewriter speed for narrative
+    return () => clearInterval(interval);
+  }, []);
+
   const handleStart = () => {
     navigate('/birth');
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-blue-200 overflow-hidden flex flex-col justify-end">
+    <div className="relative w-full bg-blue-200 flex flex-col">
       {/* Animated Clouds */}
       {clouds.map(cloud => (
         <div
@@ -114,8 +135,25 @@ export default function StartScreen() {
 
       {/* Narrative Text */}
       <div className="flex justify-center mt-4 z-10 relative">
-        <div className="bg-yellow-50 border-4 border-yellow-800 rounded-xl px-6 py-3 max-w-xl shadow-lg font-press-start text-base md:text-lg text-gray-900">
-          Join Murtaza on an epic adventure through life's milestones, from his very first steps to earning his medical degree!
+        <div className="bg-yellow-50 border-4 border-yellow-800 rounded-xl px-6 py-3 max-w-xl shadow-lg font-press-start text-base md:text-lg text-gray-900 min-h-[90px]">
+          {typedNarrative}
+          {blipIndex !== -1 && blipIndex < narrativeFull.length && (
+            <span className="inline-block w-3 h-5 align-bottom animate-blip ml-0.5">
+              <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_1_2)">
+                  <ellipse cx="8" cy="10" rx="3" ry="4" fill="#ffe066"/>
+                  <ellipse cx="8" cy="10" rx="1.5" ry="2" fill="#fffbe6"/>
+                </g>
+                <defs>
+                  <filter id="filter0_d_1_2" x="0" y="0" width="16" height="20" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                    <feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_1_2"/>
+                  </filter>
+                </defs>
+              </svg>
+            </span>
+          )}
         </div>
       </div>
 

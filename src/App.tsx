@@ -32,7 +32,7 @@ const App: React.FC = () => {
   return (
     <LevelProvider>
       <Router>
-        <div className="relative w-screen h-screen overflow-hidden bg-maple-blue">
+        <div className="relative w-screen bg-maple-blue">
           <LevelRoutes />
           {/* Only show HUD when not on start screen */}
           <Routes>
