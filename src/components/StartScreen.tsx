@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PixelArtCloud from "../art/PixelArtCloud";
 
-// --- Add your sprite images here ---
-const babySprite = "/assets/babySprite.png"; // Update path as needed
-const graduateSprite = "/assets/graduateSprite.png"; // Update path as needed
+const babySprite = "/assets/babySprite.png"; 
+const graduateSprite = "/assets/graduateSprite.png"; 
+const startScreenBanner = "/assets/startScreenBanner.png";
 
 const clouds = [
   { id: 1, left: "10%", top: "15%", duration: "70s", delay: "0s" },
@@ -46,10 +46,28 @@ export default function StartScreen() {
 
       {/* Title Banner */}
       <div className="flex flex-col items-center mt-16 z-10 relative">
-        <div className="bg-yellow-200 border-4 border-yellow-600 rounded-xl px-10 py-4 shadow-xl font-press-start text-4xl md:text-5xl font-bold tracking-wider mb-2">
-          MapleMD
+        <div className="relative flex items-center justify-center" style={{ width: 1000, height: 260 }}>
+          <img
+            src={startScreenBanner}
+            alt="MapleMD Banner"
+            className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
+            draggable="false"
+          />
+          <span
+            className="font-press-start text-6xl md:text-5xl text-yellow-200 drop-shadow-[0_4px_0_rgba(80,40,0,1)]"
+            style={{
+              textShadow: `
+                2px 2px 0 #5a3a0a,
+                4px 4px 0 #2d1a05,
+                0 0 8px #fff8b0
+              `,
+              letterSpacing: '-0.05em',
+            }}
+          >
+            MapleMD
+          </span>
         </div>
-        <div className="bg-yellow-100 border-2 border-yellow-600 rounded px-6 py-2 shadow-md font-press-start text-md md:text-xl text-yellow-900">
+        <div className="bg-yellow-100 border-2 border-yellow-600 rounded px-6 py-2 shadow-md font-press-start text-md md:text-xl text-yellow-900 mt-2">
           Murtaza's Medical Journey – From Birth to Graduation
         </div>
       </div>
