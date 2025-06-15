@@ -15,7 +15,6 @@ interface Hotspot {
 }
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
   const { addXP, addCollectible } = useLevel();
 
@@ -30,16 +29,6 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     { id: 'toy2', x: 500, y: 300, dialog: "You loved playing with these blocks!" },
   ];
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const container = e.currentTarget;
-    setScrollPosition(container.scrollLeft);
-  };
-
-  const handleHotspotClick = (hotspot: Hotspot) => {
-    setActiveDialog(hotspot.dialog);
-    addXP(10);
-  };
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setAvatarX(prev => {
@@ -50,7 +39,8 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         } else if (e.key === 'ArrowRight') {
           setAvatarDirection('right');
           setAvatarState('walkRight');
-          return Math.min(2000 - 128, prev + 10); // 128 = avatar width after scaling
+          // Use window.innerWidth for right boundary
+          return Math.min(window.innerWidth - 128, prev + 10); // 128 = avatar width after scaling
         }
         return prev;
       });
@@ -68,13 +58,15 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     };
   }, []);
 
+  const handleHotspotClick = (hotspot: Hotspot) => {
+    setActiveDialog(hotspot.dialog);
+    addXP(10);
+  };
+
   return (
-    <div 
-      className="relative w-full h-full overflow-x-auto overflow-y-hidden"
-      onScroll={handleScroll}
-    >
-      <div 
-        className="relative w-[2000px] h-full bg-gradient-to-b from-blue-400 to-blue-600"
+    <div className="relative w-full h-full overflow-hidden">
+      <div
+        className="relative w-full h-full bg-gradient-to-b from-blue-400 to-blue-600"
         style={{ backgroundImage: 'url("/assets/clouds.png")', backgroundRepeat: 'repeat-x' }}
       >
         {/* Ground */}
