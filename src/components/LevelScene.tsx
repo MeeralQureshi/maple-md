@@ -30,6 +30,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
   const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
   const [keysDown, setKeysDown] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
+  const [jumpKeyHeld, setJumpKeyHeld] = useState(false);
 
   // Example hotspots for the childhood level
   const hotspots: Hotspot[] = [
@@ -41,54 +42,19 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: true }));
       if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: true }));
-
+      if (e.key === 'ArrowUp') setJumpKeyHeld(true);
       if (e.key === 'ArrowLeft' && !isJumping) {
         setAvatarDirection('left');
         setAvatarState('walkLeft');
       } else if (e.key === 'ArrowRight' && !isJumping) {
         setAvatarDirection('right');
         setAvatarState('walkRight');
-      } else if (e.key === 'ArrowUp' && !isJumping) {
-        setIsJumping(true);
-        setAvatarY(BASE_HEIGHT + JUMP_HEIGHT);
-
-        let startX = avatarX;
-        let endX = startX;
-        if (keysDown.left && !keysDown.right) {
-          endX = Math.max(0, startX - JUMP_DISTANCE);
-        } else if (keysDown.right && !keysDown.left) {
-          endX = Math.min(window.innerWidth - 128, startX + JUMP_DISTANCE);
-        }
-
-        // Animate X over jump duration
-        const startTime = performance.now();
-        const animate = (now: number) => {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / JUMP_DURATION, 1);
-          setAvatarX(startX + (endX - startX) * progress);
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          }
-        };
-        requestAnimationFrame(animate);
-
-        setTimeout(() => {
-          setAvatarY(BASE_HEIGHT);
-          setIsJumping(false);
-          // Continue moving if a direction key is still held
-          if (keysDown.left && !keysDown.right) {
-            setAvatarDirection('left');
-            setAvatarState('walkLeft');
-          } else if (keysDown.right && !keysDown.left) {
-            setAvatarDirection('right');
-            setAvatarState('walkRight');
-          }
-        }, JUMP_DURATION);
       }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: false }));
       if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: false }));
+      if (e.key === 'ArrowUp') setJumpKeyHeld(false);
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         setAvatarState('idle');
       }
@@ -100,6 +66,47 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [isJumping, avatarX, keysDown, avatarState]);
+
+  // Auto-jump-on-hold logic
+  useEffect(() => {
+    if (!isJumping && jumpKeyHeld) {
+      setIsJumping(true);
+      setAvatarY(BASE_HEIGHT + JUMP_HEIGHT);
+
+      let startX = avatarX;
+      let endX = startX;
+      if (keysDown.left && !keysDown.right) {
+        endX = Math.max(0, startX - JUMP_DISTANCE);
+      } else if (keysDown.right && !keysDown.left) {
+        endX = Math.min(window.innerWidth - 128, startX + JUMP_DISTANCE);
+      }
+
+      // Animate X over jump duration
+      const startTime = performance.now();
+      const animate = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / JUMP_DURATION, 1);
+        setAvatarX(startX + (endX - startX) * progress);
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      requestAnimationFrame(animate);
+
+      setTimeout(() => {
+        setAvatarY(BASE_HEIGHT);
+        setIsJumping(false);
+        // Continue moving if a direction key is still held
+        if (keysDown.left && !keysDown.right) {
+          setAvatarDirection('left');
+          setAvatarState('walkLeft');
+        } else if (keysDown.right && !keysDown.left) {
+          setAvatarDirection('right');
+          setAvatarState('walkRight');
+        }
+      }, JUMP_DURATION);
+    }
+  }, [isJumping, jumpKeyHeld, avatarX, keysDown]);
 
   useEffect(() => {
     if (isJumping) return;
