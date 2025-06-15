@@ -98,7 +98,10 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div className="absolute z-30" style={{ left: avatarX, bottom: avatarY }}>
+        <div
+          className="absolute z-30 avatar-jump-transition"
+          style={{ left: avatarX, bottom: avatarY }}
+        >
           <Avatar state={avatarState} direction={avatarDirection} />
         </div>
       </div>
