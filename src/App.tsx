@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LevelScene from './components/LevelScene';
 import HUD from './components/HUD';
+import StartScreen from './components/StartScreen';
 import { LevelProvider, useLevel } from './context/LevelContext';
 
 const LevelRoutes: React.FC = () => {
@@ -9,8 +10,8 @@ const LevelRoutes: React.FC = () => {
   
   return (
     <Routes>
-      {/* Default route redirects to first level */}
-      <Route path="/" element={<Navigate to="/birth" replace />} />
+      {/* Start screen route */}
+      <Route path="/" element={<StartScreen />} />
       
       {/* Generate routes for each level */}
       {Object.values(levels).map((level) => (
@@ -33,7 +34,11 @@ const App: React.FC = () => {
       <Router>
         <div className="relative w-screen h-screen overflow-hidden bg-maple-blue">
           <LevelRoutes />
-          <HUD />
+          {/* Only show HUD when not on start screen */}
+          <Routes>
+            <Route path="/" element={null} />
+            <Route path="/*" element={<HUD />} />
+          </Routes>
         </div>
       </Router>
     </LevelProvider>
