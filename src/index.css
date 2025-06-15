@@ -32,4 +32,57 @@ body {
 
 .avatar-jump-transition {
   transition: bottom 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Start Screen Animations */
+@keyframes moveCloud {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100vw); }
+}
+
+.pixelated {
+  image-rendering: pixelated;
+}
+
+.animate-sparkle::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  top: -18px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #fff6d6 60%, transparent 70%);
+  animation: sparkleAnim 1.5s infinite;
+  opacity: 0.6;
+}
+
+@keyframes sparkleAnim {
+  0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg);}
+  50% { opacity: 0.95; transform: scale(1.1) rotate(20deg);}
+}
+
+/* Path Shine Animation */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.path-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shine 2s infinite;
+  pointer-events: none;
 } 

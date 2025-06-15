@@ -11,6 +11,9 @@ module.exports = {
         'maple-red': '#ff4d4d',
         'maple-green': '#4CAF50',
       },
+      fontFamily: {
+        'press-start': ['"Press Start 2P"', 'cursive'],
+      },
       animation: {
         'bounce-slow': 'bounce 3s infinite',
         'float': 'float 3s ease-in-out infinite',
