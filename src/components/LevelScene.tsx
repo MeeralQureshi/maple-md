@@ -60,7 +60,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div className="absolute bottom-32" style={{ left: 100 + scrollPosition }}>
+        <div className="absolute" style={{ left: 100 + scrollPosition, bottom: '-5rem' }}>
           <Avatar />
         </div>
       </div>

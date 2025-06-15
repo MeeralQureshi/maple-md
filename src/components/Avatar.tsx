@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-const SPRITE_WIDTH = 512;
+const SPRITE_WIDTH = 512;  // Each frame is 512x512
 const SPRITE_HEIGHT = 512;
-const SPRITE_SHEET = '/assets/avatar.png';
+const SPRITE_SHEET = '/assets/sprites.png';
 
 const spriteSheetMeta = {
   frameWidth: SPRITE_WIDTH,
   frameHeight: SPRITE_HEIGHT,
   frames: [
-    { name: "idle", x: 0, y: 0 },
-    { name: "walkRight", x: 512, y: 0 },
-    { name: "walkLeft", x: 0, y: 512 },
-    { name: "celebrate", x: 512, y: 512 },
+    { name: 'idle', x: 0, y: 0 },
+    { name: 'walkRight', x: 512, y: 0 },
+    { name: 'walkLeft', x: 0, y: 512 },
+    { name: 'celebrate', x: 512, y: 512 },
   ],
 };
 
@@ -58,7 +58,9 @@ const Avatar: React.FC<{ celebrate?: boolean }> = ({ celebrate }) => {
         height: SPRITE_HEIGHT,
         backgroundImage: `url(${SPRITE_SHEET})`,
         backgroundPosition: `-${frame.x}px -${frame.y}px`,
+        backgroundRepeat: 'no-repeat',
         imageRendering: 'pixelated',
+        transform: 'scale(0.25)', // Scale down to 128x128
       }}
       className="avatar-sprite"
     />
