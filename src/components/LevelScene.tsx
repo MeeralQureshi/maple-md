@@ -14,6 +14,12 @@ interface Hotspot {
   dialog: string;
 }
 
+interface LevelConfig {
+  hotspots: Hotspot[];
+  backgroundGradient: string;
+  backgroundImage: string;
+}
+
 const JUMP_HEIGHT = 120; // pixels to jump up
 const JUMP_DURATION = 400; // ms
 const BASE_HEIGHT = -270;
@@ -21,7 +27,7 @@ const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
-  const { addXP, addCollectible } = useLevel();
+  const { addXP, addCollectible, getLevelConfig } = useLevel();
 
   // Avatar movement and animation state
   const [avatarX, setAvatarX] = useState(0); // Start at far left
@@ -32,11 +38,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [keysDown, setKeysDown] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
   const [jumpKeyHeld, setJumpKeyHeld] = useState(false);
 
-  // Example hotspots for the childhood level
-  const hotspots: Hotspot[] = [
-    { id: 'toy1', x: 200, y: 300, dialog: "Remember your favorite teddy bear?" },
-    { id: 'toy2', x: 500, y: 300, dialog: "You loved playing with these blocks!" },
-  ];
+  const levelConfig = getLevelConfig(levelId);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -148,14 +150,17 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   return (
     <div className="relative w-full h-full overflow-hidden">
       <div
-        className="relative w-full h-full bg-gradient-to-b from-blue-400 to-blue-600"
-        style={{ backgroundImage: 'url("/assets/clouds.png")', backgroundRepeat: 'repeat-x' }}
+        className={`relative w-full h-full bg-gradient-to-b ${levelConfig.backgroundGradient}`}
+        style={{ 
+          backgroundImage: `url(${levelConfig.backgroundImage})`,
+          backgroundRepeat: 'repeat-x' 
+        }}
       >
         {/* Ground */}
         <div className="absolute bottom-0 w-full h-32 bg-green-600 z-10" />
         
         {/* Hotspots */}
-        {hotspots.map((hotspot) => (
+        {levelConfig.hotspots.map((hotspot) => (
           <div
             key={hotspot.id}
             className="absolute w-8 h-8 cursor-pointer animate-bounce-slow z-50"

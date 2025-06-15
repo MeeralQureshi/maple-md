@@ -10,7 +10,7 @@ const HUD: React.FC = () => {
         <div className="flex justify-between items-center">
           {/* Level Title */}
           <div className="text-xl font-bold">
-            {currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}
+            {currentLevel.name}
           </div>
 
           {/* XP Bar */}
