@@ -16,7 +16,8 @@ interface Hotspot {
 
 const JUMP_HEIGHT = 120; // pixels to jump up
 const JUMP_DURATION = 400; // ms
-const BASE_HEIGHT = -270
+const BASE_HEIGHT = -270;
+const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
@@ -28,6 +29,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [isJumping, setIsJumping] = useState(false);
   const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
   const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
+  const [keysDown, setKeysDown] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
 
   // Example hotspots for the childhood level
   const hotspots: Hotspot[] = [
@@ -37,28 +39,56 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      setAvatarX(prev => {
-        if (e.key === 'ArrowLeft') {
-          setAvatarDirection('left');
-          setAvatarState('walkLeft');
-          return Math.max(0, prev - 10);
-        } else if (e.key === 'ArrowRight') {
-          setAvatarDirection('right');
-          setAvatarState('walkRight');
-          return Math.min(window.innerWidth - 128, prev + 10); // 128 = avatar width after scaling
-        }
-        return prev;
-      });
-      if (e.key === 'ArrowUp' && !isJumping) {
+      if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: true }));
+      if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: true }));
+
+      if (e.key === 'ArrowLeft' && !isJumping) {
+        setAvatarDirection('left');
+        setAvatarState('walkLeft');
+      } else if (e.key === 'ArrowRight' && !isJumping) {
+        setAvatarDirection('right');
+        setAvatarState('walkRight');
+      } else if (e.key === 'ArrowUp' && !isJumping) {
         setIsJumping(true);
         setAvatarY(BASE_HEIGHT + JUMP_HEIGHT);
+
+        let startX = avatarX;
+        let endX = startX;
+        if (keysDown.left && !keysDown.right) {
+          endX = Math.max(0, startX - JUMP_DISTANCE);
+        } else if (keysDown.right && !keysDown.left) {
+          endX = Math.min(window.innerWidth - 128, startX + JUMP_DISTANCE);
+        }
+
+        // Animate X over jump duration
+        const startTime = performance.now();
+        const animate = (now: number) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / JUMP_DURATION, 1);
+          setAvatarX(startX + (endX - startX) * progress);
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        requestAnimationFrame(animate);
+
         setTimeout(() => {
           setAvatarY(BASE_HEIGHT);
           setIsJumping(false);
+          // Continue moving if a direction key is still held
+          if (keysDown.left && !keysDown.right) {
+            setAvatarDirection('left');
+            setAvatarState('walkLeft');
+          } else if (keysDown.right && !keysDown.left) {
+            setAvatarDirection('right');
+            setAvatarState('walkRight');
+          }
         }, JUMP_DURATION);
       }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: false }));
+      if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: false }));
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         setAvatarState('idle');
       }
@@ -69,7 +99,39 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [isJumping]);
+  }, [isJumping, avatarX, keysDown, avatarState]);
+
+  useEffect(() => {
+    if (isJumping) return;
+
+    let animationFrame: number | null = null;
+
+    const move = () => {
+      setAvatarX(prev => {
+        if (keysDown.left && !keysDown.right) {
+          setAvatarDirection('left');
+          setAvatarState('walkLeft');
+          return Math.max(0, prev - 4); // smaller step for smoothness
+        } else if (keysDown.right && !keysDown.left) {
+          setAvatarDirection('right');
+          setAvatarState('walkRight');
+          return Math.min(window.innerWidth - 128, prev + 4);
+        } else {
+          setAvatarState('idle');
+          return prev;
+        }
+      });
+      animationFrame = requestAnimationFrame(move);
+    };
+
+    if (keysDown.left || keysDown.right) {
+      animationFrame = requestAnimationFrame(move);
+    }
+
+    return () => {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, [keysDown, isJumping]);
 
   const handleHotspotClick = (hotspot: Hotspot) => {
     setActiveDialog(hotspot.dialog);
@@ -98,10 +160,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div
-          className="absolute z-30 avatar-jump-transition"
-          style={{ left: avatarX, bottom: avatarY }}
-        >
+        <div className="absolute z-30 avatar-jump-transition" style={{ left: avatarX, bottom: avatarY }}>
           <Avatar state={avatarState} direction={avatarDirection} />
         </div>
       </div>
