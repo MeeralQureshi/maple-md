@@ -148,12 +148,14 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full min-h-screen overflow-hidden">
       <div
-        className={`relative w-full h-full bg-gradient-to-b ${levelConfig.backgroundGradient}`}
+        className={`relative w-full min-h-screen bg-gradient-to-b ${levelConfig.backgroundGradient}`}
         style={{ 
           backgroundImage: `url(${levelConfig.backgroundImage})`,
-          backgroundRepeat: 'repeat-x' 
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       >
         {/* Ground */}
