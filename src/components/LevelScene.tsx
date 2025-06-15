@@ -14,12 +14,18 @@ interface Hotspot {
   dialog: string;
 }
 
+const JUMP_HEIGHT = 120; // pixels to jump up
+const JUMP_DURATION = 400; // ms
+const BASE_HEIGHT = -270
+
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
   const { addXP, addCollectible } = useLevel();
 
   // Avatar movement and animation state
   const [avatarX, setAvatarX] = useState(0); // Start at far left
+  const [avatarY, setAvatarY] = useState(BASE_HEIGHT); // -270 is the normal bottom value
+  const [isJumping, setIsJumping] = useState(false);
   const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
   const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
 
@@ -39,11 +45,18 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         } else if (e.key === 'ArrowRight') {
           setAvatarDirection('right');
           setAvatarState('walkRight');
-          // Use window.innerWidth for right boundary
           return Math.min(window.innerWidth - 128, prev + 10); // 128 = avatar width after scaling
         }
         return prev;
       });
+      if (e.key === 'ArrowUp' && !isJumping) {
+        setIsJumping(true);
+        setAvatarY(BASE_HEIGHT + JUMP_HEIGHT);
+        setTimeout(() => {
+          setAvatarY(BASE_HEIGHT);
+          setIsJumping(false);
+        }, JUMP_DURATION);
+      }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -56,7 +69,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, []);
+  }, [isJumping]);
 
   const handleHotspotClick = (hotspot: Hotspot) => {
     setActiveDialog(hotspot.dialog);
@@ -85,7 +98,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         ))}
 
         {/* Avatar */}
-        <div className="absolute z-30" style={{ left: avatarX, bottom: '-17rem' }}>
+        <div className="absolute z-30" style={{ left: avatarX, bottom: avatarY }}>
           <Avatar state={avatarState} direction={avatarDirection} />
         </div>
       </div>
