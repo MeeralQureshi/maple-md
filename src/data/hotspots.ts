@@ -64,7 +64,7 @@ export const hotspotConfigs: Record<string, HotspotConfig> = {
     id: 'PSPC',
     emoji: '🦢',
     xp: 20,
-    dialog: "You made a bunch of origigami art just to go to PSPC a second time!"
+    dialog: "You made a bunch of origami art just to go to PSPC a second time!"
   },
   dnd: {
     id: 'dnd',
@@ -112,13 +112,13 @@ export const hotspotConfigs: Record<string, HotspotConfig> = {
     id: 'ship',
     emoji: '🚢',
     xp: 25,
-    dialog: "Unfortunately you were hit by hurricane Maria, but managed to continue med school on a cruise ship!"
+    dialog: "Unfortunately you were hit by hurricane Maria, but managed to continue your journey on a cruise ship!"
   },
   covid: {
     id: 'covid',
     emoji: '🦠',
     xp: 25,
-    dialog: "You even went through the COVID pandemic, but managed to finish med school!"
+    dialog: "You even went through the COVID pandemic, the whole world was on lockdown!"
   },
   med_school_grad: {
     id: 'med_school_grad',
@@ -168,7 +168,7 @@ export const hotspotConfigs: Record<string, HotspotConfig> = {
     xp: 30,
     dialog: "You also had an entire mini-human during residency!"
   },
-  newborn: {
+  baby_honeymoon: {
     id: 'baby_honeymoon',
     emoji: '🍼',
     xp: 30,
