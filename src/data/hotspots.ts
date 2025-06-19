@@ -96,10 +96,16 @@ export const hotspotConfigs: Record<string, HotspotConfig> = {
     xp: 25,
     dialog: "Game nights at Cat's Eye and Bahen Centre were the best! Remember those Super Smash Bros tournaments?"
   },
+  lcs: {
+    id: 'lcs',
+    emoji: '💻',
+    xp: 10,
+    dialog: "Remember when we got to go watch the LCS finals in Toronto with our friends?"
+  },
   eternum: {
     id: 'eternum',
     emoji: '🐉',
-    xp: 25,
+    xp: 15,
     dialog: "You started DMing one of your first campaigns with your friends across Life Science and Computer Science - Eternum!"
   },
   ross: {

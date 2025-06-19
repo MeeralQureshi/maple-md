@@ -99,6 +99,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'program', x: 200, y: 200 },
       { id: 'meeting', x: 500, y: 200 },
       { id: 'game_nights', x: 800, y: 200 },
+      { id: 'lcs', x: 1000, y: 200 },
       { id: 'eternum', x: 1200, y: 200 },
     ],
     backgroundGradient: 'from-blue-400 to-blue-600',
