@@ -187,8 +187,14 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       setTimeout(() => {
         setLevelComplete(false);
         if (nextLevelRef.current) {
-          setCurrentLevel(nextLevelRef.current);
-          navigate('/' + nextLevelRef.current);
+          if (nextLevelRef.current === 'end') {
+            // Navigate to end screen
+            navigate('/end');
+          } else {
+            // Navigate to next level
+            setCurrentLevel(nextLevelRef.current);
+            navigate('/' + nextLevelRef.current);
+          }
         }
       }, 1800); // Show message for 1.8s
     }
