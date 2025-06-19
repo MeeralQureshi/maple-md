@@ -30,7 +30,7 @@ interface LevelConfig {
 
 const JUMP_HEIGHT = 120; // pixels to jump up
 const JUMP_DURATION = 400; // ms
-const BASE_HEIGHT = -330;
+const BASE_HEIGHT = -360;
 const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
@@ -42,7 +42,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
 
   // Avatar movement and animation state
   const [avatarX, setAvatarX] = useState(0); // Start at far left
-  const [avatarY, setAvatarY] = useState(BASE_HEIGHT); // -270 is the normal bottom value
+  const [avatarY, setAvatarY] = useState(BASE_HEIGHT);
   const [isJumping, setIsJumping] = useState(false);
   const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
   const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
@@ -152,13 +152,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       if (animationFrame) cancelAnimationFrame(animationFrame);
     };
   }, [keysDown, isJumping]);
-
-  const handleHotspotClick = (hotspot: { id: string; dialog: string }) => {
-    setActiveDialog(hotspot.dialog);
-    addXP(10);
-    addCollectible();
-  };
-
+  
   // Handle dialog close with spacebar
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -230,7 +224,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         }}
       >
         {/* Ground */}
-        <div className="absolute bottom-0 w-full h-16 bg-green-600 z-10" />
+        <div className={`absolute bottom-0 w-full h-8 ${levelConfig.groundColor} z-10`} />
         
         {/* Hotspots */}
         {levelConfig.hotspots.map((hotspot) => {

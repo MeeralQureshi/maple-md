@@ -45,7 +45,8 @@ const defaultLevel: LevelConfig = {
   name: 'Unknown Level',
   hotspots: [],
   backgroundGradient: 'from-gray-400 to-gray-600',
-  backgroundImage: '/assets/clouds.png'
+  backgroundImage: '/assets/clouds.png',
+  groundColor: 'bg-gray-600'
 };
 
 const LevelContext = createContext<LevelContextType | undefined>(undefined);
