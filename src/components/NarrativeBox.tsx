@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 interface NarrativeBoxProps {
   narrative: string;
   className?: string;
+  variant?: 'default' | 'sidebar';
 }
 
-const NarrativeBox: React.FC<NarrativeBoxProps> = ({ narrative, className = "" }) => {
+const NarrativeBox: React.FC<NarrativeBoxProps> = ({ narrative, className = "", variant = 'default' }) => {
   const [typedNarrative, setTypedNarrative] = useState("");
   const [blipIndex, setBlipIndex] = useState(-1);
 
@@ -26,7 +27,13 @@ const NarrativeBox: React.FC<NarrativeBoxProps> = ({ narrative, className = "" }
   }, [narrative]);
 
   return (
-    <div className={`bg-yellow-50 border-4 border-yellow-800 rounded-xl px-6 py-3 w-full max-w-4xl shadow-lg font-press-start text-base md:text-lg text-gray-900 min-h-[90px] ${className}`}>
+    <div
+      className={`bg-yellow-50 border-4 border-yellow-800 rounded-xl shadow-lg font-press-start text-gray-900 ${
+        variant === 'sidebar'
+          ? 'fixed top-8 right-40 w-64 h-auto max-h-[340px] p-4 z-40 text-sm flex flex-col items-start'
+          : 'px-6 py-3 w-full max-w-4xl min-h-[90px] text-base md:text-lg'
+      } ${className}`}
+    >
       {typedNarrative}
       {blipIndex !== -1 && blipIndex < narrative.length && (
         <span className="inline-block w-3 h-5 align-bottom animate-blip ml-0.5">

@@ -6,6 +6,7 @@ import Sprite from './Sprite';
 import Hotspot from './Hotspot';
 import { useLevel } from '../context/LevelContext';
 import { getHotspotConfig } from '../data/hotspots';
+import NarrativeBox from './NarrativeBox';
 
 interface LevelSceneProps {
   levelId: string;
@@ -168,6 +169,13 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
+      {/* Sidebar Narrative Box */}
+      {levelConfig.sidebarNarrative && (
+        <NarrativeBox
+          narrative={levelConfig.sidebarNarrative}
+          variant="sidebar"
+        />
+      )}
       {/* Level Complete Overlay */}
       {levelComplete && (
         <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">

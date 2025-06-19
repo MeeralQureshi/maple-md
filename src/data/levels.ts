@@ -25,6 +25,7 @@ export interface LevelConfig {
   groundColor: string;
   spriteSheet?: string;
   nextLevel?: string;
+  sidebarNarrative?: string;
 }
 
 export const defaultLevels: Record<string, LevelConfig> = {
@@ -61,7 +62,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/hospital.png',
     groundColor: 'bg-green-400',
     spriteSheet: '/assets/babySprites.png',
-    nextLevel: 'childhood'
+    nextLevel: 'childhood',
+    sidebarNarrative: 'A new life begins...'
   },
   childhood: {
     id: 'childhood',
@@ -74,7 +76,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/childhood.png',
     groundColor: 'bg-orange-500',
     spriteSheet: '/assets/childSprite.png',
-    nextLevel: 'school'
+    nextLevel: 'school',
+    sidebarNarrative: 'Imagination and play fill the days.'
   },
   school: {
     id: 'school',
@@ -90,7 +93,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/school.png',
     groundColor: 'bg-green-600',
     spriteSheet: '/assets/schoolSprite.png',
-    nextLevel: 'university'
+    nextLevel: 'university',
+    sidebarNarrative: 'Learning, friends, and new adventures.'
   },
   university: {
     id: 'university',
@@ -117,7 +121,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/university.png',
     groundColor: 'bg-green-600',
     spriteSheet: '/assets/universitySprite.png',
-    nextLevel: 'med_school'
+    nextLevel: 'med_school',
+    sidebarNarrative: 'A world of knowledge and new connections.'
   },
   med_school: {
     id: 'med_school',
@@ -131,7 +136,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/med_school.png',
     groundColor: 'bg-yellow-600',
     spriteSheet: '/assets/medSchoolSprite.png',
-    nextLevel: 'residency'
+    nextLevel: 'residency',
+    sidebarNarrative: 'Dedication and challenge on the path to medicine.'
   },
   residency: {
     id: 'residency',
@@ -144,7 +150,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/residency.png',
     groundColor: 'bg-green-700',
     spriteSheet: '/assets/residencySprite.png',
-    nextLevel: 'wedding'
+    nextLevel: 'wedding',
+    sidebarNarrative: 'Long hours, big dreams, and new milestones.'
   },
   wedding: {
     id: 'wedding',
@@ -169,7 +176,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/wedding.png',
     groundColor: 'bg-yellow-500',
     spriteSheet: '/assets/weddingSprite.png',
-    nextLevel: 'baby'
+    nextLevel: 'baby',
+    sidebarNarrative: 'A celebration of love and new beginnings.'
   },
   baby: {
     id: 'baby',
@@ -198,7 +206,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
         height: 170,
         imageSrc: '/assets/parentsSprite.png',
         animation: 'wave',
-        zIndex: 20
+        zIndex: 22
       },
       {
         id: 'newborn',
@@ -214,7 +222,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
     backgroundImage: '/assets/baby.png',
     groundColor: 'bg-cyan-500',
     spriteSheet: '/assets/residencySprite.png',
-    nextLevel: 'graduation'
+    sidebarNarrative: 'A new generation, a new adventure.'
   },
   graduation: {
     id: 'graduation',
