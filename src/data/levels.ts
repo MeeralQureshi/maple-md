@@ -21,9 +21,9 @@ export interface LevelConfig {
     animation?: Sprite['animation'];
     zIndex: number;
   }>;
-  backgroundGradient: string;
   backgroundImage: string;
   groundColor: string;
+  spriteSheet?: string;
   nextLevel?: string;
 }
 
@@ -40,7 +40,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       {
         id: 'parents',
         x: 1000,
-        y: 20,
+        y: 0,
         width: 160,
         height: 160,
         imageSrc: '/assets/parentsSprite.png',
@@ -50,7 +50,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       {
         id: 'brother',
         x: 1120,
-        y: 20,
+        y: 0,
         width: 120,
         height: 120,
         imageSrc: '/assets/brotherBabySprite.png',
@@ -58,9 +58,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
         zIndex: 21
       }
     ],
-    backgroundGradient: 'from-pink-200 to-pink-400',
     backgroundImage: '/assets/hospital.png',
     groundColor: 'bg-green-400',
+    spriteSheet: '/assets/babySprites.png',
     nextLevel: 'childhood'
   },
   childhood: {
@@ -71,9 +71,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'creative', x: 400, y: 200 },
       { id: 'song', x: 700, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/childhood.png',
     groundColor: 'bg-orange-500',
+    spriteSheet: '/assets/childSprite.png',
     nextLevel: 'school'
   },
   school: {
@@ -87,9 +87,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'dnd', x: 1000, y: 200 },
 
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/school.png',
     groundColor: 'bg-green-600',
+    spriteSheet: '/assets/schoolSprite.png',
     nextLevel: 'university'
   },
   university: {
@@ -99,12 +99,11 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'program', x: 200, y: 200 },
       { id: 'meeting', x: 500, y: 200 },
       { id: 'game_nights', x: 800, y: 200 },
-      { id: 'lcs', x: 1000, y: 200 },
       { id: 'eternum', x: 1200, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/university.png',
     groundColor: 'bg-green-600',
+    spriteSheet: '/assets/universitySprite.png',
     nextLevel: 'med_school'
   },
   med_school: {
@@ -116,9 +115,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'covid', x: 900, y: 200 },
       { id: 'med_school_grad', x: 1200, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/med_school.png',
     groundColor: 'bg-yellow-600',
+    spriteSheet: '/assets/medSchoolSprite.png',
     nextLevel: 'residency'
   },
   residency: {
@@ -129,9 +128,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'life_events', x: 800, y: 200 },
       { id: 'union', x: 1200, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/residency.png',
     groundColor: 'bg-green-700',
+    spriteSheet: '/assets/residencySprite.png',
     nextLevel: 'wedding'
   },
   wedding: {
@@ -142,9 +141,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'honeymoon', x: 800, y: 200 },
       { id: 'vacations', x: 1400, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/wedding.png',
     groundColor: 'bg-yellow-500',
+    spriteSheet: '/assets/weddingSprite.png',
     nextLevel: 'baby'
   },
   baby: {
@@ -155,9 +154,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'baby_honeymoon', x: 700, y: 200 },
       { id: 'crawling', x: 1000, y: 200 },
     ],
-    backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/baby.png',
     groundColor: 'bg-cyan-500',
+    spriteSheet: '/assets/residencySprite.png',
     nextLevel: 'graduation'
   },
   graduation: {
@@ -168,9 +167,10 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'family', x: 600, y: 200 },
       { id: 'future', x: 900, y: 200 },
     ],
-    backgroundGradient: 'from-purple-600 to-blue-800',
+    sprites: [],
     backgroundImage: '/assets/graduation.png',
     groundColor: 'bg-amber-600',
+    spriteSheet: '/assets/graduationSprite.png',
     nextLevel: 'end'
   },
 }; 

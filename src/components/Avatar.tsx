@@ -3,10 +3,7 @@ import React from 'react';
 const SPRITE_WIDTH = 512;  // Each frame is 512x512
 const SPRITE_HEIGHT = 512;
 
-const ADULT_SPRITE_SHEET = '/assets/adultSprites.png';
-const BABY_SPRITE_SHEET = '/assets/babySprites.png';
-
-const otherSpriteSheetsMeta = {
+const spriteSheetMeta = {
   frameWidth: SPRITE_WIDTH,
   frameHeight: SPRITE_WIDTH,
   frames: [
@@ -14,32 +11,21 @@ const otherSpriteSheetsMeta = {
     { name: 'walkLeft', x: 524, y: 0 },
   ],
 };
-
-const spriteSheetMeta = {
-  frameWidth: SPRITE_WIDTH,
-  frameHeight: SPRITE_HEIGHT,
-  frames: [
-    { name: 'idle', x: 0, y: 0 },
-    { name: 'walkLeft', x: 0, y: 512 },
-  ],
-};
-
 type AvatarState = 'idle' | 'walkRight' | 'walkLeft' | 'celebrate';
-type AvatarDirection = 'left' | 'right';
 
 interface AvatarProps {
   state: AvatarState;
-  direction: AvatarDirection;
   celebrate?: boolean;
+  spriteSheet?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ state, direction, celebrate }) => {
+const Avatar: React.FC<AvatarProps> = ({ state, celebrate, spriteSheet }) => {
   // Use celebrate state if true
   const displayState: AvatarState = celebrate ? 'celebrate' : state;
   
   // For walkRight, use walkLeft sprite but flip it
   const effectiveState = displayState === 'walkRight' ? 'walkLeft' : displayState;
-  const frame = otherSpriteSheetsMeta.frames.find(f => f.name === effectiveState) || otherSpriteSheetsMeta.frames[0];
+  const frame = spriteSheetMeta.frames.find(f => f.name === effectiveState) || spriteSheetMeta.frames[0];
 
   const isFlipped = displayState === 'walkRight';
   const isWalkingRight = state === 'walkRight';
@@ -49,7 +35,7 @@ const Avatar: React.FC<AvatarProps> = ({ state, direction, celebrate }) => {
       style={{
         width: SPRITE_WIDTH,
         height: SPRITE_HEIGHT,
-        backgroundImage: `url(${BABY_SPRITE_SHEET})`,
+        backgroundImage: `url(${spriteSheet})`,
         backgroundPosition: `-${frame.x}px -${frame.y}px`,
         backgroundRepeat: 'no-repeat',
         imageRendering: 'pixelated',

@@ -23,8 +23,8 @@ interface Hotspot {
 interface LevelConfig {
   hotspots: Hotspot[];
   sprites?: SpriteType[];
-  backgroundGradient: string;
   backgroundImage: string;
+  spriteSheet?: string;
   nextLevel?: string;
 }
 
@@ -45,7 +45,6 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [avatarY, setAvatarY] = useState(BASE_HEIGHT);
   const [isJumping, setIsJumping] = useState(false);
   const [avatarState, setAvatarState] = useState<'idle' | 'walkLeft' | 'walkRight' | 'celebrate'>('idle');
-  const [avatarDirection, setAvatarDirection] = useState<'left' | 'right'>('right');
   const [keysDown, setKeysDown] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
   const [jumpKeyHeld, setJumpKeyHeld] = useState(false);
 
@@ -56,21 +55,11 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: true }));
       if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: true }));
       if (e.key === 'ArrowUp') setJumpKeyHeld(true);
-      if (e.key === 'ArrowLeft' && !isJumping) {
-        setAvatarDirection('left');
-        setAvatarState('walkLeft');
-      } else if (e.key === 'ArrowRight' && !isJumping) {
-        setAvatarDirection('right');
-        setAvatarState('walkRight');
-      }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: false }));
       if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: false }));
       if (e.key === 'ArrowUp') setJumpKeyHeld(false);
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        setAvatarState('idle');
-      }
     };
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -78,7 +67,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [isJumping, avatarX, keysDown, avatarState]);
+  }, []);
 
   // Auto-jump-on-hold logic
   useEffect(() => {
@@ -109,14 +98,6 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       setTimeout(() => {
         setAvatarY(BASE_HEIGHT);
         setIsJumping(false);
-        // Continue moving if a direction key is still held
-        if (keysDown.left && !keysDown.right) {
-          setAvatarDirection('left');
-          setAvatarState('walkLeft');
-        } else if (keysDown.right && !keysDown.left) {
-          setAvatarDirection('right');
-          setAvatarState('walkRight');
-        }
       }, JUMP_DURATION);
     }
   }, [isJumping, jumpKeyHeld, avatarX, keysDown]);
@@ -129,11 +110,9 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     const move = () => {
       setAvatarX(prev => {
         if (keysDown.left && !keysDown.right) {
-          setAvatarDirection('left');
           setAvatarState('walkLeft');
           return Math.max(0, prev - 4); // smaller step for smoothness
         } else if (keysDown.right && !keysDown.left) {
-          setAvatarDirection('right');
           setAvatarState('walkRight');
           return Math.min(window.innerWidth - 128, prev + 4);
         } else {
@@ -215,7 +194,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         </div>
       )}
       <div
-        className={`relative w-full min-h-screen bg-gradient-to-b ${levelConfig.backgroundGradient}`}
+        className="relative w-full min-h-screen"
         style={{ 
           backgroundImage: `url(${levelConfig.backgroundImage})`,
           backgroundRepeat: 'no-repeat',
@@ -254,7 +233,10 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
 
         {/* Avatar */}
         <div className="absolute z-30 avatar-jump-transition" style={{ left: avatarX, bottom: avatarY }}>
-          <Avatar state={avatarState} direction={avatarDirection} />
+          <Avatar 
+            state={avatarState} 
+            spriteSheet={levelConfig.spriteSheet}
+          />
         </div>
       </div>
 
