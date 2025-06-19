@@ -60,6 +60,9 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       if (e.key === 'ArrowLeft') setKeysDown(k => ({ ...k, left: false }));
       if (e.key === 'ArrowRight') setKeysDown(k => ({ ...k, right: false }));
       if (e.key === 'ArrowUp') setJumpKeyHeld(false);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        setAvatarState('idle');
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);

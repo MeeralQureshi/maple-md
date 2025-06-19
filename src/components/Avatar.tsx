@@ -39,7 +39,7 @@ const Avatar: React.FC<AvatarProps> = ({ state, celebrate, spriteSheet }) => {
         backgroundPosition: `-${frame.x}px -${frame.y}px`,
         backgroundRepeat: 'no-repeat',
         imageRendering: 'pixelated',
-        transform: `scale(0.25) ${isFlipped ? 'scaleX(-1)' : ''}`,
+        transform: `scale(0.3) ${isFlipped ? 'scaleX(-1)' : ''}`,
         transformOrigin: isFlipped ? 'top right' : 'top left',
         marginLeft: isWalkingRight ? '-500px' : '0px',
       }}

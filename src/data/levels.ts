@@ -99,6 +99,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'program', x: 200, y: 200 },
       { id: 'meeting', x: 500, y: 200 },
       { id: 'game_nights', x: 800, y: 200 },
+      { id: 'lcs', x: 1000, y: 200 },
       { id: 'eternum', x: 1200, y: 200 },
     ],
     backgroundImage: '/assets/university.png',
@@ -170,7 +171,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
     sprites: [],
     backgroundImage: '/assets/graduation.png',
     groundColor: 'bg-amber-600',
-    spriteSheet: '/assets/graduationSprite.png',
+    spriteSheet: '/assets/graduateSprite.png',
     nextLevel: 'end'
   },
 }; 
