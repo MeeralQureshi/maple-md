@@ -7,10 +7,23 @@ export interface Hotspot {
   dialog: string;
 }
 
+export interface Sprite {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  imageSrc: string;
+  animation?: 'idle' | 'walk' | 'wave' | 'sit';
+  direction?: 'left' | 'right';
+  zIndex?: number;
+}
+
 export interface LevelConfig {
   id: string;
   name: string;
   hotspots: Hotspot[];
+  sprites?: Sprite[];
   backgroundGradient: string;
   backgroundImage: string;
   nextLevel?: string;
@@ -41,11 +54,33 @@ const defaultLevels: Record<string, LevelConfig> = {
     id: 'birth',
     name: 'Birth',
     hotspots: [
-      { id: 'hospital', x: 200, y: 300, dialog: "Welcome to the world! You were born in this hospital." },
-      { id: 'parents', x: 500, y: 300, dialog: "Your parents are so happy to meet you!" },
-      { id: 'first_breath', x: 800, y: 300, dialog: "Your first breath - the beginning of your journey." },
+      { id: 'hospital', x: 200, y: 250, dialog: "Welcome to the world! You were born in this hospital." },
+      { id: 'parents', x: 500, y: 250, dialog: "Your parents and older brother are so happy to meet you!" },
+      { id: 'first_breath', x: 800, y: 250, dialog: "Your first breath - the beginning of your journey." },
     ],
-    backgroundGradient: 'from-pink-200 to-pink-400',
+    sprites: [
+      {
+        id: 'parents',
+        x: 1000,
+        y: 50,
+        width: 160,
+        height: 160,
+        imageSrc: '/assets/parentsSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+      {
+        id: 'brother',
+        x: 1120,
+        y: 50,
+        width: 140,
+        height: 140,
+        imageSrc: '/assets/brotherBabySprite.png',
+        animation: 'wave',
+        zIndex: 21
+      }
+    ],
+    backgroundGradient: 'from-pink-250 to-pink-400',
     backgroundImage: '/assets/hospital.png',
     nextLevel: 'childhood'
   },
@@ -53,8 +88,8 @@ const defaultLevels: Record<string, LevelConfig> = {
     id: 'childhood',
     name: 'Childhood',
     hotspots: [
-      { id: 'toy1', x: 200, y: 300, dialog: "Remember your favorite teddy bear?" },
-      { id: 'toy2', x: 500, y: 300, dialog: "You loved playing with these blocks!" },
+      { id: 'toy1', x: 200, y: 250, dialog: "Remember your favorite teddy bear?" },
+      { id: 'toy2', x: 500, y: 250, dialog: "You loved playing with these blocks!" },
     ],
     backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/clouds.png'

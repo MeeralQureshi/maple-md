@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import DialogBox from './DialogBox';
-import { useLevel } from '../context/LevelContext';
+import Sprite from './Sprite';
+import { useLevel, Sprite as SpriteType } from '../context/LevelContext';
 
 interface LevelSceneProps {
   levelId: string;
@@ -16,13 +17,14 @@ interface Hotspot {
 
 interface LevelConfig {
   hotspots: Hotspot[];
+  sprites?: SpriteType[];
   backgroundGradient: string;
   backgroundImage: string;
 }
 
 const JUMP_HEIGHT = 120; // pixels to jump up
 const JUMP_DURATION = 400; // ms
-const BASE_HEIGHT = -270;
+const BASE_HEIGHT = -330;
 const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
@@ -159,7 +161,7 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         }}
       >
         {/* Ground */}
-        <div className="absolute bottom-0 w-full h-32 bg-green-600 z-10" />
+        <div className="absolute bottom-0 w-full h-16 bg-green-600 z-10" />
         
         {/* Hotspots */}
         {levelConfig.hotspots.map((hotspot) => (
@@ -171,6 +173,11 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
           >
             <div className="w-full h-full bg-yellow-400 rounded-full" />
           </div>
+        ))}
+
+        {/* Sprites */}
+        {levelConfig.sprites?.map((sprite) => (
+          <Sprite key={sprite.id} sprite={sprite} />
         ))}
 
         {/* Avatar */}
