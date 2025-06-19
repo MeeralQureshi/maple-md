@@ -67,6 +67,7 @@ export const LevelProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const handleSetCurrentLevel = (levelId: string) => {
     const level = getLevelConfig(levelId);
     setCurrentLevel(level);
+    setXP(0);
   };
 
   const addXP = (amount: number) => {
