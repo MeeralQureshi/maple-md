@@ -102,6 +102,18 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'lcs', x: 1000, y: 200 },
       { id: 'eternum', x: 1200, y: 200 },
     ],
+    sprites: [
+      {
+        id: 'wife_university',
+        x: 500,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/wifeUni.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+    ],
     backgroundImage: '/assets/university.png',
     groundColor: 'bg-green-600',
     spriteSheet: '/assets/universitySprite.png',
@@ -142,6 +154,18 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'honeymoon', x: 800, y: 200 },
       { id: 'vacations', x: 1400, y: 200 },
     ],
+    sprites: [
+      {
+        id: 'wife_bride',
+        x: 400,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/brideSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+    ],
     backgroundImage: '/assets/wedding.png',
     groundColor: 'bg-yellow-500',
     spriteSheet: '/assets/weddingSprite.png',
@@ -155,6 +179,38 @@ export const defaultLevels: Record<string, LevelConfig> = {
       { id: 'baby_honeymoon', x: 700, y: 200 },
       { id: 'crawling', x: 1000, y: 200 },
     ],
+    sprites: [
+      {
+        id: 'wifeBirth',
+        x: 100,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/wifeBirthSprite.png',
+        animation: 'wave',
+        zIndex: 21
+      },
+      {
+        id: 'parents',
+        x: 1200,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/parentsSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+      {
+        id: 'newborn',
+        x: 220,
+        y: 0,
+        width: 160,
+        height: 160,
+        imageSrc: '/assets/newbornSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+    ],
     backgroundImage: '/assets/baby.png',
     groundColor: 'bg-cyan-500',
     spriteSheet: '/assets/residencySprite.png',
@@ -166,9 +222,60 @@ export const defaultLevels: Record<string, LevelConfig> = {
     hotspots: [
       { id: 'diploma', x: 300, y: 200 },
       { id: 'family', x: 600, y: 200 },
-      { id: 'future', x: 900, y: 200 },
+      { id: 'future', x: 800, y: 200 },
     ],
-    sprites: [],
+    sprites: [
+      {
+        id: 'wifeGrad',
+        x: 900,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/wifeBirthSprite.png',
+        animation: 'wave',
+        zIndex: 21
+      },
+      {
+        id: 'baby',
+        x: 1000,
+        y: 0,
+        width: 150,
+        height: 150,
+        imageSrc: '/assets/babySprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+      {
+        id: 'parents',
+        x: 1100,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/parentsSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+      {
+        id: 'olderBrother',
+        x: 1250,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/olderBrotherSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+      {
+        id: 'youngerBrotherWife',
+        x: 1350,
+        y: 0,
+        width: 200,
+        height: 200,
+        imageSrc: '/assets/brotherWifeSprite.png',
+        animation: 'wave',
+        zIndex: 20
+      },
+    ],
     backgroundImage: '/assets/graduation.png',
     groundColor: 'bg-amber-600',
     spriteSheet: '/assets/graduateSprite.png',

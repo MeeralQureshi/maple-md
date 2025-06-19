@@ -30,7 +30,7 @@ interface LevelConfig {
 
 const JUMP_HEIGHT = 120; // pixels to jump up
 const JUMP_DURATION = 400; // ms
-const BASE_HEIGHT = -360;
+const BASE_HEIGHT = -340;
 const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
