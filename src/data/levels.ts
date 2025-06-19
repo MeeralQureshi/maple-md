@@ -9,6 +9,7 @@ export interface LevelConfig {
     y: number;
     dialog: string;
     iconSrc?: string;
+    xp?: number;
   }>;
   sprites?: Array<{
     id: string;
@@ -30,9 +31,9 @@ export const defaultLevels: Record<string, LevelConfig> = {
     id: 'birth',
     name: 'Birth',
     hotspots: [
-      { id: 'hospital', x: 200, y: 250, dialog: "Welcome to the world! You were born in this hospital." },
-      { id: 'parents', x: 500, y: 250, dialog: "Your parents and older brother are so happy to meet you!" },
-      { id: 'first_breath', x: 800, y: 250, dialog: "Your first breath - the beginning of your journey." },
+      { id: 'hospital', x: 200, y: 250, dialog: "Welcome to the world! You were born in this hospital.", xp: 20 },
+      { id: 'parents', x: 500, y: 250, dialog: "Your parents and older brother are so happy to meet you!", xp: 30 },
+      { id: 'first_breath', x: 800, y: 250, dialog: "Your first breath - the beginning of your journey.", xp: 50 },
     ],
     sprites: [
       {
@@ -64,8 +65,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
     id: 'childhood',
     name: 'Childhood',
     hotspots: [
-      { id: 'toy1', x: 200, y: 250, dialog: "Remember your favorite teddy bear?" },
-      { id: 'toy2', x: 500, y: 250, dialog: "You loved playing with these blocks!" },
+      { id: 'toy1', x: 200, y: 250, dialog: "Remember your favorite teddy bear?", xp: 15 },
+      { id: 'toy2', x: 500, y: 250, dialog: "You loved playing with these blocks!", xp: 15 },
     ],
     backgroundGradient: 'from-blue-400 to-blue-600',
     backgroundImage: '/assets/clouds.png'

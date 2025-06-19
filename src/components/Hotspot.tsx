@@ -6,10 +6,11 @@ interface HotspotProps {
   y: number;
   dialog: string;
   iconSrc?: string;
-  onHotspotClick: (hotspot: { id: string; dialog: string }) => void;
+  xp?: number;
+  onHotspotClick: (hotspot: { id: string; dialog: string; xp?: number }) => void;
 }
 
-const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, onHotspotClick }) => {
+const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, xp, onHotspotClick }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isCollected, setIsCollected] = useState(false);
 
@@ -17,7 +18,7 @@ const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, onHotspotC
     if (isCollected || isAnimating) return;
     
     setIsAnimating(true);
-    onHotspotClick({ id, dialog });
+    onHotspotClick({ id, dialog, xp });
     
     // After animation completes, mark as collected
     setTimeout(() => {

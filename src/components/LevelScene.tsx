@@ -15,6 +15,7 @@ interface Hotspot {
   y: number;
   dialog: string;
   iconSrc?: string;
+  xp?: number;
 }
 
 interface LevelConfig {
@@ -190,7 +191,12 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
             y={hotspot.y}
             dialog={hotspot.dialog}
             iconSrc={hotspot.iconSrc}
-            onHotspotClick={handleHotspotClick}
+            xp={hotspot.xp}
+            onHotspotClick={({ id, dialog, xp }) => {
+              setActiveDialog(dialog);
+              addXP(xp ?? 10);
+              addCollectible();
+            }}
           />
         ))}
 
