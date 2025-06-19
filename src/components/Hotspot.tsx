@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getHotspotEmoji } from '../data/hotspots';
 
 interface HotspotProps {
   id: string;
@@ -21,23 +22,6 @@ const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, xp, onHots
     setTimeout(() => {
       setIsCollected(true);
     }, 800);
-  };
-
-  const getHotspotEmoji = (hotspotId: string): string => {
-    switch (hotspotId) {
-      case 'hospital':
-        return '🏥';
-      case 'parents':
-        return '👨‍👩‍👦';
-      case 'first_breath':
-        return '💨';
-      case 'toy1':
-        return '🧸';
-      case 'toy2':
-        return '🧱';
-      default:
-        return '⭐';
-    }
   };
 
   if (isCollected) return null;
