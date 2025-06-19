@@ -40,7 +40,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       {
         id: 'parents',
         x: 1000,
-        y: 50,
+        y: 20,
         width: 160,
         height: 160,
         imageSrc: '/assets/parentsSprite.png',
@@ -50,7 +50,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
       {
         id: 'brother',
         x: 1120,
-        y: 50,
+        y: 20,
         width: 120,
         height: 120,
         imageSrc: '/assets/brotherBabySprite.png',
