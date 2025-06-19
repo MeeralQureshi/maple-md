@@ -165,7 +165,7 @@ export const hotspotConfigs: Record<string, HotspotConfig> = {
   vacations: {
     id: 'vacations',
     emoji: '🌍',
-    xp: 70,
+    xp: 30,
     dialog: "Since our wedding we've had so many great adventures together! Umrah, Maldives, a cruise, Banff, Detroit, and many more to come!"
   },
   baby: {

@@ -173,7 +173,7 @@ export const defaultLevels: Record<string, LevelConfig> = {
   },
   baby: {
     id: 'baby',
-    name: 'baby',
+    name: 'Baby\'s Birth',
     hotspots: [
       { id: 'baby', x: 100, y: 200 },
       { id: 'baby_honeymoon', x: 700, y: 200 },
@@ -184,8 +184,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
         id: 'wifeBirth',
         x: 100,
         y: 0,
-        width: 200,
-        height: 200,
+        width: 170,
+        height: 170,
         imageSrc: '/assets/wifeBirthSprite.png',
         animation: 'wave',
         zIndex: 21
@@ -194,8 +194,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
         id: 'parents',
         x: 1200,
         y: 0,
-        width: 200,
-        height: 200,
+        width: 170,
+        height: 170,
         imageSrc: '/assets/parentsSprite.png',
         animation: 'wave',
         zIndex: 20
@@ -204,8 +204,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
         id: 'newborn',
         x: 220,
         y: 0,
-        width: 160,
-        height: 160,
+        width: 140,
+        height: 140,
         imageSrc: '/assets/newbornSprite.png',
         animation: 'wave',
         zIndex: 20

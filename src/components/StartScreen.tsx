@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PixelArtCloud from "../art/PixelArtCloud";
 import NarrativeBox from "./NarrativeBox";
@@ -19,24 +19,6 @@ export default function StartScreen() {
 
   // Typewriter effect for narrative text
   const narrativeFull = "Join Murtaza on an epic adventure through life's milestones, from his very first steps to earning his medical degree!";
-  const [typedNarrative, setTypedNarrative] = useState("");
-  const [blipIndex, setBlipIndex] = useState(-1);
-
-  useEffect(() => {
-    setTypedNarrative("");
-    setBlipIndex(-1);
-    let i = 0;
-    const interval = setInterval(() => {
-      setTypedNarrative(narrativeFull.slice(0, i + 1));
-      setBlipIndex(i);
-      i++;
-      if (i >= narrativeFull.length) {
-        clearInterval(interval);
-        setTimeout(() => setBlipIndex(-1), 200); // Remove blip after finish
-      }
-    }, 24); // Fast typewriter speed for narrative
-    return () => clearInterval(interval);
-  }, []);
 
   const handleStart = () => {
     navigate('/birth');

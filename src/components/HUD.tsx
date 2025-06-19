@@ -2,7 +2,7 @@ import React from 'react';
 import { useLevel } from '../context/LevelContext';
 
 const HUD: React.FC = () => {
-  const { xp, collectibles, currentLevel } = useLevel();
+  const { xp, currentLevel } = useLevel();
 
   // Determine if XP is at least 100
   const isXpFull = xp >= 100;

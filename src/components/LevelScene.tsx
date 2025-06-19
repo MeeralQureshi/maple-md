@@ -4,28 +4,11 @@ import Avatar from './Avatar';
 import DialogBox from './DialogBox';
 import Sprite from './Sprite';
 import Hotspot from './Hotspot';
-import { useLevel, Sprite as SpriteType } from '../context/LevelContext';
+import { useLevel } from '../context/LevelContext';
 import { getHotspotConfig } from '../data/hotspots';
 
 interface LevelSceneProps {
   levelId: string;
-}
-
-interface Hotspot {
-  id: string;
-  x: number;
-  y: number;
-  dialog?: string;
-  iconSrc?: string;
-  xp?: number;
-}
-
-interface LevelConfig {
-  hotspots: Hotspot[];
-  sprites?: SpriteType[];
-  backgroundImage: string;
-  spriteSheet?: string;
-  nextLevel?: string;
 }
 
 const JUMP_HEIGHT = 120; // pixels to jump up

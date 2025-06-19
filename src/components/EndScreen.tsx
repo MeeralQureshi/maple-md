@@ -23,19 +23,19 @@ const EndScreen: React.FC = () => {
     "Ready to start a new chapter?"
   ];
 
-  const confettiColors = [
-    '#FFD700', // Gold
-    '#FF6B6B', // Red
-    '#4ECDC4', // Teal
-    '#45B7D1', // Blue
-    '#96CEB4', // Green
-    '#FFEAA7', // Yellow
-    '#DDA0DD', // Plum
-    '#98D8C8'  // Mint
-  ];
-
   // Generate confetti pieces
   useEffect(() => {
+    const confettiColors = [
+      '#FFD700', // Gold
+      '#FF6B6B', // Red
+      '#4ECDC4', // Teal
+      '#45B7D1', // Blue
+      '#96CEB4', // Green
+      '#FFEAA7', // Yellow
+      '#DDA0DD', // Plum
+      '#98D8C8'  // Mint
+    ];
+
     const generateConfetti = () => {
       const pieces: ConfettiPiece[] = [];
       for (let i = 0; i < 100; i++) {
