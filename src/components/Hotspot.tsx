@@ -49,7 +49,7 @@ const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, onHotspotC
 
   return (
     <div
-      className={`absolute w-12 h-12 cursor-pointer z-50 flex items-center justify-center text-2xl ${
+      className={`absolute w-16 h-16 cursor-pointer z-50 flex items-center justify-center text-3xl ${
         isAnimating ? 'animate-coin-disappear' : shouldShow ? 'animate-bounce-slow' : ''
       }`}
       style={{ 
@@ -68,15 +68,15 @@ const Hotspot: React.FC<HotspotProps> = ({ id, x, y, dialog, iconSrc, onHotspotC
         />
       ) : (
         <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full border-2 border-yellow-700 flex items-center justify-center shadow-lg relative" style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)' }}>
-          <span className="text-2xl">
+          <span className="text-3xl">
             {getHotspotEmoji(id)}
           </span>
           {/* Sparkle effects */}
           {shouldShow && (
             <>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-200 rounded-full animate-ping" />
-              <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-yellow-100 rounded-full animate-pulse" />
-              <div className="absolute top-1 left-1 w-1 h-1 bg-white rounded-full animate-bounce" />
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-200 rounded-full animate-ping" />
+              <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-yellow-100 rounded-full animate-pulse" />
+              <div className="absolute top-2 left-2 w-2 h-2 bg-white rounded-full animate-bounce" />
             </>
           )}
         </div>
