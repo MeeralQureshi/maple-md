@@ -37,8 +37,8 @@
   animation: bounce-slow 2s ease-in-out infinite;
 }
 
-/* Sparkle animation */
-@keyframes sparkle {
+/* Coin twirl animation (was .animate-sparkle) */
+@keyframes coin-twirl {
   0%, 100% {
     opacity: 1;
     transform: scale(1) rotate(0deg);
@@ -57,8 +57,8 @@
   }
 }
 
-.animate-sparkle {
-  animation: sparkle 3s ease-in-out infinite;
+.animate-coin-twirl {
+  animation: coin-twirl 3s ease-in-out infinite;
 }
 
 /* Coin disappear animation */
