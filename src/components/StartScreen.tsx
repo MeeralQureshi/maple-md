@@ -4,7 +4,7 @@ import PixelArtCloud from "../art/PixelArtCloud";
 import NarrativeBox from "./NarrativeBox";
 
 const babySprite = "/assets/babySprite.png"; 
-const graduateSprite = "/assets/graduateSprite.png"; 
+const graduateSprite = "/assets/graduateSpriteStart.png"; 
 const startScreenBanner = "/assets/startScreenBanner.png";
 
 const clouds = [
