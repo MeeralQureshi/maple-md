@@ -152,6 +152,21 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     addCollectible();
   };
 
+  // Handle dialog close with spacebar
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && activeDialog) {
+        e.preventDefault(); // Prevent page scroll
+        setActiveDialog(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeDialog]);
+
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       <div

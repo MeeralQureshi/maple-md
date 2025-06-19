@@ -27,7 +27,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ message, onClose }) => {
         </button>
       </div>
       <div className="mt-2 text-sm text-gray-500">
-        Press any key to continue...
+        Press spacebar key to continue...
       </div>
     </motion.div>
   );
