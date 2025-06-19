@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from './Avatar';
 import DialogBox from './DialogBox';
 import Sprite from './Sprite';
@@ -23,6 +24,7 @@ interface LevelConfig {
   sprites?: SpriteType[];
   backgroundGradient: string;
   backgroundImage: string;
+  nextLevel?: string;
 }
 
 const JUMP_HEIGHT = 120; // pixels to jump up
@@ -32,7 +34,10 @@ const JUMP_DISTANCE = 60; // pixels to move horizontally during jump
 
 const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
   const [activeDialog, setActiveDialog] = useState<string | null>(null);
-  const { addXP, addCollectible, getLevelConfig } = useLevel();
+  const [levelComplete, setLevelComplete] = useState(false);
+  const { addXP, addCollectible, getLevelConfig, setCurrentLevel, xp } = useLevel();
+  const nextLevelRef = useRef<string | null>(null);
+  const navigate = useNavigate();
 
   // Avatar movement and animation state
   const [avatarX, setAvatarX] = useState(0); // Start at far left
@@ -168,8 +173,46 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     };
   }, [activeDialog]);
 
+  // Transition to next level when avatar reaches far right and has 100+ XP
+  useEffect(() => {
+    const avatarWidth = 128;
+    if (
+      avatarX >= window.innerWidth - avatarWidth &&
+      levelConfig.nextLevel &&
+      xp >= 100 &&
+      !levelComplete
+    ) {
+      setLevelComplete(true);
+      nextLevelRef.current = levelConfig.nextLevel;
+      setTimeout(() => {
+        setLevelComplete(false);
+        if (nextLevelRef.current) {
+          setCurrentLevel(nextLevelRef.current);
+          navigate('/' + nextLevelRef.current);
+        }
+      }, 1800); // Show message for 1.8s
+    }
+  }, [avatarX, levelConfig.nextLevel, setCurrentLevel, xp, levelComplete, navigate]);
+
+  // Reset avatar position when level changes
+  useEffect(() => {
+    setAvatarX(0); // Start at far left
+    setAvatarY(BASE_HEIGHT);
+  }, [levelId]);
+
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
+      {/* Level Complete Overlay */}
+      {levelComplete && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div className="bg-black bg-opacity-60 rounded-2xl px-16 py-12 shadow-2xl border-4 border-yellow-400 flex flex-col items-center">
+            <span className="font-press-start text-4xl text-green-300 drop-shadow-lg mb-4" style={{ textShadow: '2px 2px 0 #222, 4px 4px 0 #000' }}>
+              Level Complete!
+            </span>
+            <span className="font-press-start text-xl text-yellow-200">Get ready for the next stage...</span>
+          </div>
+        </div>
+      )}
       <div
         className={`relative w-full min-h-screen bg-gradient-to-b ${levelConfig.backgroundGradient}`}
         style={{ 
