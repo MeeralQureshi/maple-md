@@ -50,8 +50,8 @@ export const defaultLevels: Record<string, LevelConfig> = {
         id: 'brother',
         x: 1120,
         y: 50,
-        width: 140,
-        height: 140,
+        width: 120,
+        height: 120,
         imageSrc: '/assets/brotherBabySprite.png',
         animation: 'wave',
         zIndex: 21

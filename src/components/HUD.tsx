@@ -4,6 +4,9 @@ import { useLevel } from '../context/LevelContext';
 const HUD: React.FC = () => {
   const { xp, collectibles, currentLevel } = useLevel();
 
+  // Determine if XP is at least 100
+  const isXpFull = xp >= 100;
+
   return (
     <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
       <div className="flex flex-row items-stretch border-4 border-yellow-700 bg-yellow-400 shadow-pixel rounded-none px-0 py-0" style={{ boxShadow: '4px 4px 0 #a05a00, 8px 8px 0 #000' }}>
@@ -25,9 +28,9 @@ const HUD: React.FC = () => {
           <div className="flex items-center mb-2">
             <div className="relative h-8 w-72 bg-gray-800 border-4 border-gray-900 rounded-none flex items-center" style={{ boxShadow: '2px 2px 0 #222' }}>
               <div
-                className="absolute left-0 top-0 h-full bg-maple-yellow"
+                className={`absolute left-0 top-0 h-full ${isXpFull ? 'bg-green-500 animate-xp-flash' : 'bg-maple-yellow'}`}
                 style={{
-                  width: `${Math.min((xp % 100), 100)}%`,
+                  width: `${isXpFull ? 100 : Math.min(xp % 100, 100)}%`,
                   transition: 'width 0.3s',
                   zIndex: 1,
                 }}
