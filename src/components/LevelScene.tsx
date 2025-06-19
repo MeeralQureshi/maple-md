@@ -5,6 +5,7 @@ import DialogBox from './DialogBox';
 import Sprite from './Sprite';
 import Hotspot from './Hotspot';
 import { useLevel, Sprite as SpriteType } from '../context/LevelContext';
+import { getHotspotConfig } from '../data/hotspots';
 
 interface LevelSceneProps {
   levelId: string;
@@ -14,7 +15,7 @@ interface Hotspot {
   id: string;
   x: number;
   y: number;
-  dialog: string;
+  dialog?: string;
   iconSrc?: string;
   xp?: number;
 }
@@ -232,22 +233,25 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         <div className="absolute bottom-0 w-full h-16 bg-green-600 z-10" />
         
         {/* Hotspots */}
-        {levelConfig.hotspots.map((hotspot) => (
-          <Hotspot
-            key={hotspot.id}
-            id={hotspot.id}
-            x={hotspot.x}
-            y={hotspot.y}
-            dialog={hotspot.dialog}
-            iconSrc={hotspot.iconSrc}
-            xp={hotspot.xp}
-            onHotspotClick={({ id, dialog, xp }) => {
-              setActiveDialog(dialog);
-              addXP(xp ?? 10);
-              addCollectible();
-            }}
-          />
-        ))}
+        {levelConfig.hotspots.map((hotspot) => {
+          const hotspotConfig = getHotspotConfig(hotspot.id);
+          return (
+            <Hotspot
+              key={hotspot.id}
+              id={hotspot.id}
+              x={hotspot.x}
+              y={hotspot.y}
+              dialog={hotspotConfig?.dialog || ''}
+              iconSrc={hotspot.iconSrc}
+              xp={hotspotConfig?.xp}
+              onHotspotClick={({ id, dialog, xp }) => {
+                setActiveDialog(dialog);
+                addXP(xp ?? 10);
+                addCollectible();
+              }}
+            />
+          );
+        })}
 
         {/* Sprites */}
         {levelConfig.sprites?.map((sprite) => (

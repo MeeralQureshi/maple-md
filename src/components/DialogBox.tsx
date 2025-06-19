@@ -56,7 +56,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ message, onClose }) => {
           <div className="text-center mb-4">
             <div className="inline-flex items-center space-x-2 bg-amber-200 px-4 py-2 rounded-full border-2 border-amber-700">
               <span className="text-amber-800 text-lg">📜</span>
-              <span className="text-amber-800 font-bold text-sm tracking-wider">MILESTONE!</span>
+              <span className="text-amber-800 font-bold text-sm tracking-wider">MEMORY UNLOCKED</span>
             </div>
           </div>
           
