@@ -5,6 +5,7 @@ export interface Hotspot {
   x: number;
   y: number;
   dialog: string;
+  iconSrc?: string;
 }
 
 export interface Sprite {

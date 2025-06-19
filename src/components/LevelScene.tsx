@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import DialogBox from './DialogBox';
 import Sprite from './Sprite';
+import Hotspot from './Hotspot';
 import { useLevel, Sprite as SpriteType } from '../context/LevelContext';
 
 interface LevelSceneProps {
@@ -13,6 +14,7 @@ interface Hotspot {
   x: number;
   y: number;
   dialog: string;
+  iconSrc?: string;
 }
 
 interface LevelConfig {
@@ -144,9 +146,10 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
     };
   }, [keysDown, isJumping]);
 
-  const handleHotspotClick = (hotspot: Hotspot) => {
+  const handleHotspotClick = (hotspot: { id: string; dialog: string }) => {
     setActiveDialog(hotspot.dialog);
     addXP(10);
+    addCollectible();
   };
 
   return (
@@ -165,14 +168,15 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
         
         {/* Hotspots */}
         {levelConfig.hotspots.map((hotspot) => (
-          <div
+          <Hotspot
             key={hotspot.id}
-            className="absolute w-8 h-8 cursor-pointer animate-bounce-slow z-50"
-            style={{ left: hotspot.x, bottom: hotspot.y }}
-            onClick={() => handleHotspotClick(hotspot)}
-          >
-            <div className="w-full h-full bg-yellow-400 rounded-full" />
-          </div>
+            id={hotspot.id}
+            x={hotspot.x}
+            y={hotspot.y}
+            dialog={hotspot.dialog}
+            iconSrc={hotspot.iconSrc}
+            onHotspotClick={handleHotspotClick}
+          />
         ))}
 
         {/* Sprites */}
