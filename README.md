@@ -1,16 +1,16 @@
 # Maple MD - A Life Journey Game
 
-A Maplestory-inspired web application that takes you through a journey of life stages, built with React and Tailwind CSS.
+A Maplestory-inspired web application that inspired by my husband's journey journey through medicine, from Birth to Residency Graduation.
 
 ## Features
 
 - Side-scrolling platformer-style levels
-- Interactive hotspots with dialogue
+- Interactive hotspots with "memories"
 - Collectible items and XP system
 - Chibi-style avatar with walking animations
 - Beautiful HUD with level information
 
-## Getting Started
+## Try it locally
 
 1. Install dependencies:
 ```bash
@@ -32,13 +32,22 @@ npm start
 
 ## Project Structure
 
+- `src/art/` - Custom Art components
 - `src/components/` - React components
-  - `Avatar.tsx` - Player character with movement controls
+  - `Avatar.tsx` - Player character logic with movement controls
+  - `Hotspot.tsx` - Central logic for hotspots/memories
   - `DialogBox.tsx` - NPC-style dialogue system
-  - `HUD.tsx` - Game interface with XP and collectibles
+  - `NarrativeBox.tsx` - Scroll-like narrative box for story-telling text
+  - `HUD.tsx` - Game interface with XP bar tracker and level indicator
   - `LevelScene.tsx` - Main game level container
+  - `StartScreen.tsx` - The start screen for the game
+  - `EndScreen.tsx` - The graduation end screen for the game
+  - `Sprite.tsx` - General logic for the NPC Sprites
 - `src/context/` - React context for game state
   - `LevelContext.tsx` - Manages level progression and stats
+- `src/data/` - Static config files for the game
+  - `hotspots.ts` - Configs for hotspots for each level
+  - `levels.ts` - Configs for levels
 
 ## Development
 
@@ -48,6 +57,4 @@ This project uses:
 - Tailwind CSS
 - Framer Motion for animations
 
-## License
-
-MIT License - Feel free to use this code for your own projects! 
+Built with the help of Cursor + AI Agent
