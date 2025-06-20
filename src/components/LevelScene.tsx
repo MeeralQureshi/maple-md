@@ -143,6 +143,8 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
       xp >= 100 &&
       !levelComplete
     ) {
+      const audio = new Audio('/assets/sounds/level-complete.wav');
+      audio.play();
       setLevelComplete(true);
       nextLevelRef.current = levelConfig.nextLevel;
       setTimeout(() => {
@@ -212,6 +214,9 @@ const LevelScene: React.FC<LevelSceneProps> = ({ levelId }) => {
               iconSrc={hotspot.iconSrc}
               xp={hotspotConfig?.xp}
               onHotspotClick={({ id, dialog, xp }) => {
+                const audio = new Audio('/assets/sounds/coin.wav');
+                audio.volume = 0.8;
+                audio.play();
                 setActiveDialog(dialog);
                 addXP(xp ?? 10);
                 addCollectible();

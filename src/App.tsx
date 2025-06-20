@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useRef, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LevelScene from './components/LevelScene';
 import HUD from './components/HUD';
 import StartScreen from './components/StartScreen';
@@ -32,19 +32,47 @@ const LevelRoutes: React.FC = () => {
   );
 };
 
+const AppContent: React.FC<{ onInteraction: () => void; audioRef: React.RefObject<HTMLAudioElement> }> = ({ onInteraction, audioRef }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      if (location.pathname === '/end') {
+        audio.pause();
+      } else {
+        // This will attempt to play if it's paused.
+        // It will only succeed if the user has interacted with the page.
+        audio.play().catch(() => {});
+      }
+    }
+  }, [location.pathname, audioRef]);
+
+  return (
+    <div className="relative w-screen bg-maple-blue" onClick={onInteraction}>
+      <LevelRoutes />
+      {/* Only show HUD when not on start screen or end screen */}
+      {location.pathname !== '/' && location.pathname !== '/end' && <HUD />}
+    </div>
+  );
+};
+
 const App: React.FC = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const handleUserInteraction = () => {
+    const audio = audioRef.current;
+    if (audio && audio.paused) {
+      audio.volume = 0.2;
+      audio.play().catch(console.error);
+    }
+  };
+
   return (
     <LevelProvider>
       <Router>
-        <div className="relative w-screen bg-maple-blue">
-          <LevelRoutes />
-          {/* Only show HUD when not on start screen or end screen */}
-          <Routes>
-            <Route path="/" element={null} />
-            <Route path="/end" element={null} />
-            <Route path="/*" element={<HUD />} />
-          </Routes>
-        </div>
+        <audio ref={audioRef} src="/assets/sounds/game-music.wav" loop />
+        <AppContent onInteraction={handleUserInteraction} audioRef={audioRef} />
       </Router>
     </LevelProvider>
   );

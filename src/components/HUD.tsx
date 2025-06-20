@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLevel } from '../context/LevelContext';
 
 const HUD: React.FC = () => {
   const { xp, currentLevel } = useLevel();
+  const [hasPlayedFullXpSound, setHasPlayedFullXpSound] = useState(false);
 
   // Determine if XP is at least 100
   const isXpFull = xp >= 100;
+
+  useEffect(() => {
+    if (isXpFull && !hasPlayedFullXpSound) {
+      const timer = setTimeout(() => {
+        const audio = new Audio('/assets/sounds/experience-full.wav');
+        audio.play();
+        setHasPlayedFullXpSound(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (!isXpFull) {
+      setHasPlayedFullXpSound(false);
+    }
+  }, [isXpFull, hasPlayedFullXpSound]);
 
   return (
     <div className="fixed top-4 left-4 z-50">

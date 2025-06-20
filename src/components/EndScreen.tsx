@@ -23,6 +23,12 @@ const EndScreen: React.FC = () => {
     "Ready to start a new chapter?"
   ];
 
+  // Play sound on mount
+  useEffect(() => {
+    const audio = new Audio('/assets/sounds/end-screen.wav');
+    audio.play();
+  }, []);
+
   // Generate confetti pieces
   useEffect(() => {
     const confettiColors = [
